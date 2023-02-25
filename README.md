@@ -1,57 +1,24 @@
-# Python PDM Template
-A Project Template of Python with PDM
+# Cython Obfuscation Example
+An example project to use Cython for obfuscation
 
-# Install
+# How to use?
 
-Please first install PDM >= 2.0 with pip/pipx.
-
-```bash
-pdm install --prod
-```
-
-# Develop
+First install all dependencies.
 
 ```bash
 pdm install
 ```
 
-This installs the following tools in addition to `pdm install --prod`.
-
-- ruff
-- pyright
-- black
-- pytest-cov
-
-The settings of those linter and formatters are written in `pyproject.toml`
-
-# VSCode Settings
+Then run
 
 ```bash
-cp vscode_templates .vscode
+pdm run python setup.py build
 ```
 
-Then install/activate all extensions listed in `.vscode/extensions.json`
+This will compile all `.py` files into `.so` files. The outputs are in `build/lib.linux-x86_64-cpython-311` in case of Python 3.11 in 64bit Linux.
 
-# Creating Console Script
+You can include this output directory to your `PYTHONPATH` or simply replace all files in `src` to the compiles ones. Not that root `__init__.py` is required for PDM to correctly recognize a project. You must keep this file.
 
-```toml
-[project.scripts]
-app = "app.cli:main"
-```
-
-# Define Project Command
-
-```toml
-[tool.pdm.scripts]
-black = "black ."
-pyright = "pyright ."
-ruff_lint = "ruff ."
-ruff_fix = "ruff --fix-only ."
-test = "pytest tests --cov=app --cov-report=term --cov-report=xml"
-format = { composite = ["black", "ruff_fix"] }
-lint = { composite = ["ruff_lint", "pyright"] }
-check = { composite = ["format", "lint", "test"] }
-```
 
 # Build Docker Image
 
