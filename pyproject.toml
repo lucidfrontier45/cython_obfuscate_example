@@ -5,10 +5,9 @@ dynamic = ["version"]
 authors = [{ name = "Du Shiqiao", email = "lucidfrontier.45@gmail.com" }]
 license = { text = "MIT" }
 requires-python = ">=3.9"
-dependencies = ["fastapi>=0.79.0", "uvicorn[standard]>=0.18.2"]
-
-[project.optional-dependencies]
-server = ["gunicorn>=20.1.0"]
+dependencies = [
+    "numpy>=1.24.2",
+]
 
 [project.scripts]
 app = "app.cli:main"
@@ -26,6 +25,7 @@ dev = [
     "pytest-cov>=4.0.0",
     "ruff>=0.0.195",
     "pyright>=1.1.287",
+    "cython>=3.0.0a11",
 ]
 
 [tool.pdm.scripts]
