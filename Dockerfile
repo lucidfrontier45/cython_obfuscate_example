@@ -18,12 +18,18 @@ WORKDIR /project
 RUN pip install -U pip setuptools wheel
 RUN pip install pdm
 
+# first install dependencies to cache them
 COPY pyproject.toml pdm.lock /project/
 RUN pdm sync --prod --no-self
 
-COPY --from=cython-builder /project/cython /project/src
+# cython: use cython to obfuscate code
+# raw: no obfuscation
+ARG BUILD_TYPE="cython"
+
+COPY --from=cython-builder /project/${BUILD_TYPE} /project/src
 # root __init__.py needs to be a text file for PDM to read it
 COPY --from=cython-builder /project/raw/app/__init__.py /project/src/app/__init__.py
+# now install the project
 RUN pdm sync --prod --no-editable
 
 #----------runner----------#
