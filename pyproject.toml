@@ -1,13 +1,11 @@
 [project]
-name = "python-pdm-template"
-description = "A Project Template of Python with PDM"
+name = "cython-obfuscate-example"
+description = "An example project to use Cython as a obfuscator."
 dynamic = ["version"]
 authors = [{ name = "Du Shiqiao", email = "lucidfrontier.45@gmail.com" }]
 license = { text = "MIT" }
 requires-python = ">=3.9"
-dependencies = [
-    "numpy>=1.24.2",
-]
+dependencies = ["numpy>=1.24.2"]
 
 [project.scripts]
 app = "app.cli:main"
@@ -17,7 +15,7 @@ requires = ["pdm-pep517>=1.0.0"]
 build-backend = "pdm.pep517.api"
 
 [tool.pdm]
-version = { source = "file", path = "src/app/version.py" }
+version = { source = "file", path = "src/app/__init__.py" }
 
 [tool.pdm.dev-dependencies]
 dev = [
