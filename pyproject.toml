@@ -1,0 +1,55 @@
+[project]
+name = "python-pdm-template"
+description = "A Project Template of Python with PDM"
+dynamic = ["version"]
+authors = [{ name = "Du Shiqiao", email = "lucidfrontier.45@gmail.com" }]
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = ["fastapi>=0.79.0", "uvicorn[standard]>=0.18.2"]
+
+[project.optional-dependencies]
+server = ["gunicorn>=20.1.0"]
+
+[project.scripts]
+app = "app.cli:main"
+
+[build-system]
+requires = ["pdm-pep517>=1.0.0"]
+build-backend = "pdm.pep517.api"
+
+[tool.pdm]
+version = { source = "file", path = "src/app/version.py" }
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=22.12.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.0.195",
+    "pyright>=1.1.287",
+]
+
+[tool.pdm.scripts]
+black = "black ."
+pyright = "pyright ."
+ruff_lint = "ruff ."
+ruff_fix = "ruff --fix-only ."
+test = "pytest tests --cov=app --cov-report=term --cov-report=xml"
+format = { composite = ["ruff_fix", "black"] }
+lint = { composite = ["ruff_lint", "pyright"] }
+check = { composite = ["format", "lint", "test"] }
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore::FutureWarning"]
+
+[tool.black]
+target-version = ["py39"]
+
+[tool.ruff]
+select = ["E", "F", "W"]
+target-version = "py39"
+
+[tool.ruff.per-file-ignores]
+"*/__init__.py" = ['F401']
+
+[tool.pyright]
+pythonVersion = "3.9"
